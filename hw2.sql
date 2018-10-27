@@ -20,7 +20,11 @@ where ratings.rating = 5
 ;
 -- 3. Аггрегация данных: базовые статистики
 -- 3.1 COUNT() Посчитать число фильмов без оценок
-select count(*) from ratings where rating is null;
+select count(*) 
+from links l 
+left join ratings r
+on l.movieid = r.movieid
+where rating is null;
 
 -- 3.2 GROUP BY, HAVING вывести top-10 пользователей, у который средний рейтинг выше 3.5
 select userid, avg(rating) 
