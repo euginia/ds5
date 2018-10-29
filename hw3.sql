@@ -46,4 +46,4 @@ on t.movieid = k.movieid
 
 
 -- выгрузка данных
-\copy (SELECT * FROM top_rated_tags) TO 'top_rated_tags.csv' WITH CSV HEADER DELIMITER as ';';
+\copy (SELECT * FROM top_rated_tags) TO 'top_rated_tags.csv' WITH CSV HEADER DELIMITER as E'\t';
