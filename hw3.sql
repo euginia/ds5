@@ -32,7 +32,7 @@ tags varchar(255)
 
  -- запрос 3
 
- with top_rated as (
+with top_rated as (
 	select movieid, avg(rating) avg_rating
 	from ratings
 	group by 1
@@ -40,10 +40,10 @@ tags varchar(255)
 	order by avg_rating desc, movieid asc
 	limit 150
 )
-select movieid, avg_rating, tags into top_rated_tags from top_rated t
+select t.movieid, avg_rating, tags into top_rated_tags from top_rated t
 join keywords k
-on t.movieid = k.id
+on t.movieid = k.movieid
 
 
 -- выгрузка данных
-\copy (SELECT * FROM top_rated_tags) TO 'top_rated_tags.csv' WITH CSV HEADER DELIMETER as ',';
+\copy (SELECT * FROM top_rated_tags) TO 'top_rated_tags.csv' WITH CSV HEADER DELIMITER as ';';
