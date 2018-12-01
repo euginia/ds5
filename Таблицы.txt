@@ -1,0 +1,45 @@
+Таблицы:
+
+1. Таблица с данными о пользователях, которые регистрируются, попадая на сайт из какого-то рекламного канала. Канал определяется полем source_key.
+
+create table users(
+	id serial unique not null, 
+	created_at timestamp with time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'), 
+	first_name varchar(255), 
+	last_name varchar(255), 
+	email varchar(255), 
+	create_visit_id integer, 
+	source_key varchar(255)
+	);
+
+2. Таблица с данными об оплаченных заказах, которые пользователи создали в течение визита на сайт. Также имеются данные об источнике заказа: откуда пользователь перешел на наш сайт и сделал заказ. Заказ связан с пользователем по user_id. 
+В заказе может быть одно предложение. Заказ связан с предложением по offer_id.
+
+create table deals(
+	id serial unique not null, 
+	created_at timestamp with time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'), 
+	number_for_user integer, 
+	user_id integer, 
+	offer_id integer, 
+	create_visit_id integer, 
+	source_key varchar(255)
+	);
+
+3. Таблица с данными о предложениях. В предложении может быть несколько продуктов. 
+
+create table offers(
+	id serial unique not null,
+	created_at timestamp with time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'), 
+	title varchar(255),
+	cost integer
+);
+
+4. Таблица с данными о продуктах. Продукт связан с предложением по offer_id.
+
+create table products(
+	id serial unique not null,
+	created_at timestamp with time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'), 
+	title varchar(255),
+	cost integer,
+	offer_id integer
+);
